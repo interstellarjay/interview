@@ -4,9 +4,22 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 const { User } = require("./models/User");
 
+/* @TODO - Use router */
+
 // Connect to local mongo database named interview
 mongoose.connect("mongodb://localhost:27017/interview", {
 	useNewUrlParser: true
+});
+
+app.get("/users/all", async (req, res) => {
+	let docs;
+	try {
+		docs = await User.find({});
+	} catch (error) {
+		return res.status(400).send({ error });
+	}
+
+	return res.status(200).send(docs);
 });
 
 app.post("/users/:username", async (req, res) => {
